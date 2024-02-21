@@ -31,7 +31,7 @@ function Header(props) {
               </a>
             </li>
             <li>
-              <a className="nav-link" href="cart.html">
+              <a className="nav-link" href="cart">
                 <img src="images/cart.svg" />
               </a>
             </li>

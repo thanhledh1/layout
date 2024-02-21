@@ -6,7 +6,7 @@ function Footer(props) {
       <div className="container relative">
         <div className="sofa-img">
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-lg-8">
             <div className="subscription-form">
               <h3 className="d-flex align-items-center">
@@ -42,7 +42,7 @@ function Footer(props) {
               </form>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="row g-5 mb-5">
           <div className="col-lg-4">
             <div className="mb-4 footer-logo-wrap">
