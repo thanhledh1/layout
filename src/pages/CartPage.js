@@ -1,7 +1,19 @@
 import React from "react";
 import MasterLayout from "../layouts/MasterLayout";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 function CartPage(props) {
+  const cart = useSelector(state => state.cart);
+  const navigate = useNavigate();
+
+  const handleCheckOut = ()=>{
+    alert("C123")
+    navigate("/checkout");
+
+
+  }
   return (
     <MasterLayout>
       <h1>CartPage</h1>
@@ -22,18 +34,21 @@ function CartPage(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+
+                    {
+                    cart.map((cartItem, key) => (
+                      <tr>
                       <td className="product-thumbnail">
                         <img
-                          src="images/product-1.png"
+                          src={cartItem.product.image}
                           alt="Image"
                           className="img-fluid"
                         />
                       </td>
                       <td className="product-name">
-                        <h2 className="h5 text-black">Product 1</h2>
+                        <h2 className="h5 text-black">{cartItem.product.name}</h2>
                       </td>
-                      <td>$49.00</td>
+                      <td>{cartItem.product.price}</td>
                       <td>
                         <div
                           className="input-group mb-3 d-flex align-items-center quantity-container"
@@ -50,7 +65,7 @@ function CartPage(props) {
                           <input
                             type="text"
                             className="form-control text-center quantity-amount"
-                            defaultValue={1}
+                            defaultValue={cart.quantity}
                             placeholder=""
                             aria-label="Example text with button addon"
                             aria-describedby="button-addon1"
@@ -72,56 +87,10 @@ function CartPage(props) {
                         </a>
                       </td>
                     </tr>
-                    <tr>
-                      <td className="product-thumbnail">
-                        <img
-                          src="images/product-2.png"
-                          alt="Image"
-                          className="img-fluid"
-                        />
-                      </td>
-                      <td className="product-name">
-                        <h2 className="h5 text-black">Product 2</h2>
-                      </td>
-                      <td>$49.00</td>
-                      <td>
-                        <div
-                          className="input-group mb-3 d-flex align-items-center quantity-container"
-                          style={{ maxWidth: 120 }}
-                        >
-                          <div className="input-group-prepend">
-                            <button
-                              className="btn btn-outline-black decrease"
-                              type="button"
-                            >
-                              −
-                            </button>
-                          </div>
-                          <input
-                            type="text"
-                            className="form-control text-center quantity-amount"
-                            defaultValue={1}
-                            placeholder=""
-                            aria-label="Example text with button addon"
-                            aria-describedby="button-addon1"
-                          />
-                          <div className="input-group-append">
-                            <button
-                              className="btn btn-outline-black increase"
-                              type="button"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-                      </td>
-                      <td>$49.00</td>
-                      <td>
-                        <a href="#" className="btn btn-black btn-sm">
-                          X
-                        </a>
-                      </td>
-                    </tr>
+                    ))
+                    }
+                 
+              
                   </tbody>
                 </table>
               </div>
@@ -191,7 +160,7 @@ function CartPage(props) {
                     <div className="col-md-12">
                       <button
                         className="btn btn-black btn-lg py-3 btn-block"
-                        onclick="window.location='checkout.html'"
+                        onClick={handleCheckOut}
                       >
                         Proceed To Checkout
                       </button>

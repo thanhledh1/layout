@@ -29,7 +29,7 @@ function ShopPage(props) {
                     <a className="product-item" href={`product/${product.id}`}>
 
                       <img
-                        src="product.image"
+                        src={product.image}
                         className="img-fluid product-thumbnail"
                       />
                      

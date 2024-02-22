@@ -1,7 +1,21 @@
 import React from "react";
 import MasterLayout from "../layouts/MasterLayout";
+import { useDispatch, useSelector } from "react-redux";
+import OrderModel from "../models/Order";
 
 function CheckoutPage(props) {
+  const cart = useSelector((state) => state.cart);
+  const handeSubmit = () => {
+    OrderModel.checkout({
+      cart: cart,
+    })
+      .then(function (data) {
+        
+      })
+      .catch(function (error) {
+      });
+  };
+
   return (
     <MasterLayout>
       <h1>CheckoutPage</h1>

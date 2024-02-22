@@ -1,26 +1,50 @@
 import React, { useEffect, useState } from "react";
 import MasterLayout from "../layouts/MasterLayout";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Product from "../models/Product";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_CART } from "../redux/action";
+
 
 function ProductPage(props) {
   const {id} = useParams()
-  const [products,setProducts] = useState()
+  const [product,setProduct] = useState({})
+  const cart = useSelector(state => state.cart);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
   useEffect(() => {
     Product.find(id)
       .then(function (res) {
         // Log data trả về để kiểm tra dữ liệu
         console.log(res);
-        setProducts(res.data);
+        setProduct(res.data.data);
       })
       .catch(function (error) {
         alert("500 error");
       });
   }, [id]);
+
+  const handleAddtoCart = ()=>{
+    alert (id)
+    let newCart = [...cart]
+    newCart.push({
+      product_id : id,
+      quantity : 1,
+      product : product
+    })
+    dispatch({
+      type : SET_CART,
+      payload : newCart
+    })
+    navigate("/cart");
+
+  }
+
   console.log(useParams());
   return (
     <MasterLayout>
-      <h1>ProductPage</h1>
       <section className="ftco-section">
   <div className="container">
     <div className="row">
@@ -29,27 +53,21 @@ function ProductPage(props) {
       <div className="col-lg-6 mb-5 ftco-animate">
         <a href="" className="image-popup prod-img-bg">
           <img
-            src="images/product-1.png"
+            src={product && product.image}
             className="img-fluid"
             alt="Colorlib Template"
           />
         </a>
       </div>
       <div className="col-lg-6 product-details pl-md-5 ftco-animate">
-        <h3>{products && products.name}</h3>
+        <h3>{product && product.name}</h3>
         <div className="rating d-flex">
         </div>
         <p className="price">
-        <span>{products && products.price}</span>
+        <span>{product && product.price}</span>
         </p>
-       
-    
-
-
-
-
         <p>
-        <Link to="/cart" className="btn btn-black py-3 px-5 mr-2">Add to Cart</Link>
+        <Link to="/cart" className="btn btn-black py-3 px-5 mr-2" onClick={handleAddtoCart}>Add to Cart</Link>
         <Link to="/cart" className="btn btn-primary py-3 px-5">Buy now</Link>
 
         </p>
