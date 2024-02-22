@@ -1,37 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Menu(props) {
   return (
     <ul className="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-      <li className="nav-item ">
-        <a className="nav-link" href="/">
+      <li className="nav-item">
+        <Link to="/" className="nav-link">
           Home
-        </a>
+        </Link>
       </li>
-      <li className="">
-        <a className="nav-link" href="shop">
+      <li className="nav-item">
+        <Link to="/shop" className="nav-link">
           Shop
-        </a>
+        </Link>
       </li>
-      <li>
-        <a className="nav-link" href="product">
-          Product Details
-        </a>
-      </li>
-      <li>
-        <a className="nav-link" href="login">
+     
+      <li className="nav-item">
+        <Link to="/login" className="nav-link">
           Login
-        </a>
+        </Link>
       </li>
-      <li>
-        <a className="nav-link" href="register">
-          register
-        </a>
+      <li className="nav-item">
+        <Link to="/register" className="nav-link">
+          Register
+        </Link>
       </li>
-      <li>
-        <a className="nav-link" href="checkout">
-          checkout
-        </a>
+      <li className="nav-item">
+        <Link to="/checkout" className="nav-link">
+          Checkout
+        </Link>
       </li>
     </ul>
   );
