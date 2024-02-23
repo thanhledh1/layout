@@ -3,17 +3,22 @@ import MasterLayout from "../layouts/MasterLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-
 function CartPage(props) {
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
 
-  const handleCheckOut = ()=>{
-    alert("C123")
+  const calculateTotal = () => {
+    let total = 0;
+    cart.forEach((cartItem) => {
+      total += cartItem.product.price * cartItem.quantity;
+    });
+    return total;
+  };
+
+  const handleCheckOut = () => {
     navigate("/checkout");
+  };
 
-
-  }
   return (
     <MasterLayout>
       <h1>CartPage</h1>
@@ -34,102 +39,66 @@ function CartPage(props) {
                     </tr>
                   </thead>
                   <tbody>
-
-                    {
-                    cart.map((cartItem, key) => (
-                      <tr>
-                      <td className="product-thumbnail">
-                        <img
-                          src={cartItem.product.image}
-                          alt="Image"
-                          className="img-fluid"
-                        />
-                      </td>
-                      <td className="product-name">
-                        <h2 className="h5 text-black">{cartItem.product.name}</h2>
-                      </td>
-                      <td>{cartItem.product.price}</td>
-                      <td>
-                        <div
-                          className="input-group mb-3 d-flex align-items-center quantity-container"
-                          style={{ maxWidth: 120 }}
-                        >
-                          <div className="input-group-prepend">
-                            <button
-                              className="btn btn-outline-black decrease"
-                              type="button"
-                            >
-                              −
-                            </button>
-                          </div>
-                          <input
-                            type="text"
-                            className="form-control text-center quantity-amount"
-                            defaultValue={cart.quantity}
-                            placeholder=""
-                            aria-label="Example text with button addon"
-                            aria-describedby="button-addon1"
+                    {cart.map((cartItem, key) => (
+                      <tr key={key}>
+                        <td className="product-thumbnail">
+                          <img
+                            src={cartItem.product.image}
+                            alt="Image"
+                            className="img-fluid"
                           />
-                          <div className="input-group-append">
-                            <button
-                              className="btn btn-outline-black increase"
-                              type="button"
-                            >
-                              +
-                            </button>
+                        </td>
+                        <td className="product-name">
+                          <h2 className="h5 text-black">
+                            {cartItem.product.name}
+                          </h2>
+                        </td>
+                        <td>{cartItem.product.price}</td>
+                        <td>
+                          <div
+                            className="input-group mb-3 d-flex align-items-center quantity-container"
+                            style={{ maxWidth: 120 }}
+                          >
+                            <div className="input-group-prepend">
+                              <button
+                                className="btn btn-outline-black decrease"
+                                type="button"
+                              >
+                                −
+                              </button>
+                            </div>
+                            <input
+                              type="text"
+                              className="form-control text-center quantity-amount"
+                              defaultValue={cartItem.quantity}
+                              placeholder=""
+                              aria-label="Example text with button addon"
+                              aria-describedby="button-addon1"
+                            />
+                            <div className="input-group-append">
+                              <button
+                                className="btn btn-outline-black increase"
+                                type="button"
+                              >
+                                +
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td>$49.00</td>
-                      <td>
-                        <a href="#" className="btn btn-black btn-sm">
-                          X
-                        </a>
-                      </td>
-                    </tr>
-                    ))
-                    }
-                 
-              
+                        </td>
+                        <td>${cartItem.product.price * cartItem.quantity}</td>
+                        <td>
+                          <a href="#" className="btn btn-black btn-sm">
+                            X
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
             </form>
           </div>
           <div className="row">
-            <div className="col-md-6">
-              <div className="row mb-5">
-                <div className="col-md-6 mb-3 mb-md-0">
-                  <button className="btn btn-black btn-sm btn-block">
-                    Update Cart
-                  </button>
-                </div>
-                <div className="col-md-6">
-                  <button className="btn btn-outline-black btn-sm btn-block">
-                    Continue Shopping
-                  </button>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <label className="text-black h4" htmlFor="coupon">
-                    Coupon
-                  </label>
-                  <p>Enter your coupon code if you have one.</p>
-                </div>
-                <div className="col-md-8 mb-3 mb-md-0">
-                  <input
-                    type="text"
-                    className="form-control py-3"
-                    id="coupon"
-                    placeholder="Coupon Code"
-                  />
-                </div>
-                <div className="col-md-4">
-                  <button className="btn btn-black">Apply Coupon</button>
-                </div>
-              </div>
-            </div>
             <div className="col-md-6 pl-5">
               <div className="row justify-content-end">
                 <div className="col-md-7">
@@ -145,7 +114,9 @@ function CartPage(props) {
                       <span className="text-black">Subtotal</span>
                     </div>
                     <div className="col-md-6 text-right">
-                      <strong className="text-black">$230.00</strong>
+                      <strong className="text-black">
+                        ${calculateTotal()}
+                      </strong>
                     </div>
                   </div>
                   <div className="row mb-5">
@@ -153,7 +124,9 @@ function CartPage(props) {
                       <span className="text-black">Total</span>
                     </div>
                     <div className="col-md-6 text-right">
-                      <strong className="text-black">$230.00</strong>
+                      <strong className="text-black">
+                        ${calculateTotal()}
+                      </strong>
                     </div>
                   </div>
                   <div className="row">
