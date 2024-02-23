@@ -2,9 +2,11 @@ import React from "react";
 import MasterLayout from "../layouts/MasterLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { removeItemFromCart } from "../redux/action";
 
 function CartPage(props) {
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const calculateTotal = () => {
@@ -19,13 +21,18 @@ function CartPage(props) {
     navigate("/checkout");
   };
 
+  const handleRemoveItem = (productId) => {
+    dispatch(removeItemFromCart(productId));
+  };
+
   return (
     <MasterLayout>
       <h1>CartPage</h1>
       <div className="untree_co-section before-footer-section">
         <div className="container">
           <div className="row mb-5">
-            <form className="col-md-12" method="post">
+            {/* Loại bỏ thuộc tính method="post" từ thẻ form */}
+            <div className="col-md-12">
               <div className="site-blocks-table">
                 <table className="table">
                   <thead>
@@ -87,16 +94,21 @@ function CartPage(props) {
                         </td>
                         <td>${cartItem.product.price * cartItem.quantity}</td>
                         <td>
-                          <a href="#" className="btn btn-black btn-sm">
+                          <button
+                            className="btn btn-black btn-sm"
+                            onClick={() =>
+                              handleRemoveItem(cartItem.product.id)
+                            }
+                          >
                             X
-                          </a>
+                          </button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </form>
+            </div>
           </div>
           <div className="row">
             <div className="col-md-6 pl-5">

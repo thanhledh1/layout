@@ -1,4 +1,4 @@
-import { SET_CART, SET_USER } from "./action";
+import { SET_CART, SET_USER, REMOVE_ITEM_FROM_CART } from "./action";
 
 let oldCart = localStorage.getItem("cart");
 oldCart = oldCart ? JSON.parse(oldCart) : [];
@@ -15,6 +15,11 @@ const rootReducer = (state = initialState, action) => {
     case SET_USER:
      localStorage.setItem('cart',JSON.stringify(action.payload));
       return { ...state, user: action.payload };
+      case REMOVE_ITEM_FROM_CART:
+        return {
+          ...state,
+          cart: state.cart.filter(item => item.product.id !== action.payload)
+        };
   }
   return state;
 };

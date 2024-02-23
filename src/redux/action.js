@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const SET_USER = "SET_USER";
 export const SET_CART = "SET_CART";
+export const REMOVE_ITEM_FROM_CART = "REMOVE_ITEM_FROM_CART";
+
 
 export const login = payload => {
   return async dispatch => {
@@ -18,4 +20,10 @@ export const login = payload => {
   };
 };
 
+export const removeItemFromCart = (productId) => {
+  return {
+    type: 'REMOVE_ITEM_FROM_CART',
+    payload: productId
+  };
+};
    
